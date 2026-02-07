@@ -1,0 +1,210 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-core-navigation-and-screens-for-a-wallpaper-app-with-three-content-types-2d-wallpapers-static-images-3d-wallpapers-interactive-3d-scenes-and-live-wallpapers-looping-animated-include-at-minimum-1-a-browse-screen-with-tabs-filters-for-2d-3d-live-2-a-wallpaper-detail-preview-screen-and-3-a-favorites-screen",
+      "featureTitle": "Create the core navigation and screens for a wallpaper app with three content types: 2D wallpapers (static images), 3D wallpapers (interactive 3D scenes), and Live wallpapers (looping/animated). Include at minimum: (1) a Browse screen with tabs/filters for 2D / 3D / Live, (2) a Wallpaper Detail/Preview screen, and (3) a Favorites screen.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/components/wallpapers/WallpaperCard.tsx",
+        "frontend/src/screens/BrowseScreen.tsx",
+        "frontend/src/screens/FavoritesScreen.tsx",
+        "frontend/src/screens/WallpaperDetailScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-initial-built-in-wallpaper-catalog-that-ships-with-the-app-and-supports-the-three-types-2d-image-assets-live-video-gif-canvas-animation-assets-and-3d-react-three-fiber-scenes-each-catalog-entry-must-include-id-title-type-2d-live-three-d-thumbnail-asset-path-and-preview-configuration-asset-path-for-2d-live-scene-key-config-for-3d",
+      "featureTitle": "Add an initial, built-in wallpaper catalog that ships with the app and supports the three types: 2D (image assets), Live (video/gif/canvas animation assets), and 3D (React Three Fiber scenes). Each catalog entry must include: id, title, type (2D|LIVE|THREE_D), thumbnail asset path, and preview configuration (asset path for 2D/LIVE; scene key/config for 3D).",
+      "files": [
+        "frontend/src/catalog/threeDScenes.ts",
+        "frontend/src/catalog/wallpaperCatalog.ts",
+        "frontend/src/components/wallpapers/WallpaperPreview.tsx",
+        "frontend/src/screens/BrowseScreen.tsx",
+        "frontend/src/screens/WallpaperDetailScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-3d-wallpaper-previews-using-three-js-via-react-three-fiber-provide-at-least-2-distinct-3d-wallpaper-scenes-e-g-abstract-shapes-particle-field-that-animate-over-time-and-support-basic-interaction-orbit-drag-or-pointer-interaction-in-the-preview",
+      "featureTitle": "Implement the 3D wallpaper previews using Three.js via React Three Fiber. Provide at least 2 distinct 3D wallpaper scenes (e.g., abstract shapes, particle field) that animate over time and support basic interaction (orbit/drag or pointer interaction) in the preview.",
+      "files": [
+        "frontend/src/catalog/threeDScenes.ts",
+        "frontend/src/components/three/ThreeDPreviewCanvas.tsx",
+        "frontend/src/components/three/scenes/AbstractOrbitScene.tsx",
+        "frontend/src/components/three/scenes/ParticleFieldScene.tsx",
+        "frontend/src/components/wallpapers/WallpaperPreview.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-live-wallpaper-previews-as-animated-content-support-at-least-one-of-looping-video-animated-gif-or-a-canvas-based-animation-ensure-the-preview-loops-smoothly-and-provides-play-pause-controls-when-applicable",
+      "featureTitle": "Implement Live wallpaper previews as animated content. Support at least one of: looping video, animated GIF, or a canvas-based animation. Ensure the preview loops smoothly and provides play/pause controls when applicable.",
+      "files": [
+        "frontend/src/catalog/wallpaperCatalog.ts",
+        "frontend/src/components/live/LiveWallpaperPreview.tsx",
+        "frontend/src/components/wallpapers/WallpaperPreview.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-apply-action-on-the-wallpaper-detail-screen-that-works-within-web-constraints-provide-a-full-screen-preview-mode-plus-a-download-option-for-2d-live-assets-and-for-3d-provide-an-export-snapshot-download-a-rendered-image-or-open-full-screen-mode-label-user-facing-ui-in-english",
+      "featureTitle": "Add an “Apply” action on the wallpaper detail screen that works within web constraints: provide a full-screen preview mode plus a Download option for 2D/Live assets, and for 3D provide an “Export snapshot” (download a rendered image) or “Open full-screen” mode. Label user-facing UI in English.",
+      "files": [
+        "frontend/src/components/three/ThreeDSnapshot.ts",
+        "frontend/src/components/wallpapers/ApplyActions.tsx",
+        "frontend/src/components/wallpapers/FullscreenPreviewModal.tsx",
+        "frontend/src/screens/WallpaperDetailScreen.tsx",
+        "frontend/src/utils/download.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-persist-per-user-favorites-using-internet-identity-authentication-users-should-be-able-to-favorite-unfavorite-wallpapers-from-browse-and-detail-screens-favorites-must-persist-across-reloads-for-the-same-authenticated-user",
+      "featureTitle": "Persist per-user favorites using Internet Identity authentication. Users should be able to favorite/unfavorite wallpapers from Browse and Detail screens; favorites must persist across reloads for the same authenticated user.",
+      "files": [
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/favorites/FavoriteToggleButton.tsx",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/components/wallpapers/WallpaperCard.tsx",
+        "frontend/src/screens/FavoritesScreen.tsx",
+        "frontend/src/screens/WallpaperDetailScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-data-layer-use-react-query-to-load-the-wallpaper-catalog-and-the-signed-in-user-s-favorites-and-to-perform-favorite-mutations-with-optimistic-ui-updates-and-error-rollback",
+      "featureTitle": "Frontend data layer: use React Query to load the wallpaper catalog and the signed-in user’s favorites, and to perform favorite mutations with optimistic UI updates and error rollback.",
+      "files": [
+        "frontend/src/components/favorites/FavoriteToggleButton.tsx",
+        "frontend/src/hooks/useFavoriteMutations.ts",
+        "frontend/src/hooks/useFavoritesQuery.ts",
+        "frontend/src/hooks/useWallpaperCatalogQuery.ts",
+        "frontend/src/screens/BrowseScreen.tsx",
+        "frontend/src/screens/WallpaperDetailScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-choose-and-apply-a-coherent-visual-theme-for-the-app-distinct-color-palette-typography-spacing-and-component-style-and-use-it-consistently-across-browse-detail-and-favorites-screens-do-not-use-a-blue-purple-theme",
+      "featureTitle": "Choose and apply a coherent visual theme for the app (distinct color palette, typography, spacing, and component style) and use it consistently across Browse, Detail, and Favorites screens. Do not use a blue+purple theme.",
+      "files": [
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/components/wallpapers/WallpaperCard.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-static-asset-handling-for-wallpaper-media-thumbnails-2d-images-live-assets-as-frontend-public-assets-and-reference-them-via-catalog-metadata-so-they-can-be-previewed-and-downloaded-without-routing-through-the-backend",
+      "featureTitle": "Add static asset handling for wallpaper media (thumbnails + 2D images + live assets) as frontend public assets, and reference them via catalog metadata so they can be previewed and downloaded without routing through the backend.",
+      "files": [
+        "frontend/src/catalog/wallpaperCatalog.ts",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/components/wallpapers/ApplyActions.tsx",
+        "frontend/src/components/wallpapers/WallpaperCard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

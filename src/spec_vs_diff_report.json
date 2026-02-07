@@ -1,0 +1,96 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T06:21:27.064Z",
+  "summary": "Diff adds a new Motoko backend actor with catalog + favorites APIs, and a new React frontend with routing (Browse/Detail/Favorites), 2D/Live/3D previews (R3F), apply/download actions, and per-user favorites using React Query + Internet Identity. However, catalog loading via React Query (REQ-8) is not evidenced, Browse category tabs/filters are not evidenced, and there are unrequested additions (authorization/access-control mixins and extra canister method). Also, changes appear to touch “immutable” hook paths, which conflicts with the stated constraints.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Browse screen includes tabs/filters for 2D / 3D / Live.",
+      "reason": "BrowseScreen implementation is not present in the provided diff summary, so there is no evidence of category tabs/filters UI controls (only routing/shell is shown).",
+      "evidence": [
+        "frontend/src/App.tsx (routes to BrowseScreen)"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Use React Query to load the wallpaper catalog (with loading states and visible error handling).",
+      "reason": "React Query is used for favorites (useFavoritesQuery/useFavoriteMutations), but there is no evidence of a catalog query hook or UI loading/error states for wallpaper list/catalog loading; a local built-in catalog is defined instead.",
+      "evidence": [
+        "frontend/src/catalog/wallpaperCatalog.ts",
+        "frontend/src/hooks/useFavoritesQuery.ts",
+        "frontend/src/hooks/useFavoriteMutations.ts"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Backend authorization/access-control mixin and permission gating for favorites methods (requires #user permission) plus initialization helper call from frontend actor creation.",
+      "reason": "BuildRequest only asked for per-principal favorites APIs; it did not request adding an authorization framework/mixins or permission model integration.",
+      "evidence": [
+        "backend/main.mo (MixinAuthorization, AccessControl, permission checks)",
+        "frontend/src/hooks/useActor.ts (calls actor._initializeAccessControlWithSecret)"
+      ]
+    },
+    {
+      "description": "Extra backend method isFavorite(wallpaperId)",
+      "reason": "REQ-7 specifies getFavorites/addFavorite/removeFavorite and catalog listing; isFavorite is not requested.",
+      "evidence": [
+        "backend/main.mo (public query func isFavorite)"
+      ]
+    },
+    {
+      "description": "Local frontend built-in wallpaper catalog separate from backend catalog",
+      "reason": "REQ-2/REQ-7 imply catalog metadata should be available via backend listing; the diff adds a separate frontend catalog definition without evidence it is used as a fallback/seed explicitly requested.",
+      "evidence": [
+        "frontend/src/catalog/wallpaperCatalog.ts",
+        "backend/main.mo (builtInWallpapers + getWallpaperCatalog)"
+      ]
+    },
+    {
+      "description": "Edits/additions to files under “immutable hook paths” (useActor.ts and useInternetIdentity.ts)",
+      "reason": "Constraints state these hook paths must not be edited; diff shows these files present with substantial content, implying they were introduced/changed despite the constraint (cannot confirm prior existence from the summary, but this is at least a potential constraint violation).",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/hooks/useInternetIdentity.ts"
+      ]
+    }
+  ],
+  "confidence": 0.63,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/catalog/threeDScenes.ts",
+    "frontend/src/catalog/wallpaperCatalog.ts",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/favorites/FavoriteToggleButton.tsx",
+    "frontend/src/components/layout/AppShell.tsx",
+    "frontend/src/components/live/LiveWallpaperPreview.tsx",
+    "frontend/src/components/three/ThreeDPreviewCanvas.tsx",
+    "frontend/src/components/three/ThreeDSnapshot.ts",
+    "frontend/src/components/three/scenes/AbstractOrbitScene.tsx",
+    "frontend/src/components/three/scenes/ParticleFieldScene.tsx",
+    "frontend/src/components/wallpapers/ApplyActions.tsx",
+    "frontend/src/components/wallpapers/FullscreenPreviewModal.tsx",
+    "frontend/src/components/wallpapers/WallpaperCard.tsx",
+    "frontend/src/components/wallpapers/WallpaperPreview.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useFavoriteMutations.ts",
+    "frontend/src/hooks/useFavoritesQuery.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useWallpaperCatalogQuery.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/screens/BrowseScreen.tsx",
+    "frontend/src/screens/FavoritesScreen.tsx",
+    "frontend/src/screens/WallpaperDetailScreen.tsx",
+    "frontend/src/utils/download.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

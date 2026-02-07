@@ -1,2 +1,3 @@
-# 2d-3d-live-wallpaper-browser-preview-and-apply-app
-Exported from Caffeine project: 2D / 3D / Live Wallpaper Browser, Preview, and Apply App
+## 2D / 3D / Live Wallpaper Browser, Preview, and Apply App
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

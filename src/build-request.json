@@ -1,0 +1,208 @@
+{
+  "kind": "build_request",
+  "title": "2D / 3D / Live Wallpaper Browser, Preview, and Apply App",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the core navigation and screens for a wallpaper app with three content types: 2D wallpapers (static images), 3D wallpapers (interactive 3D scenes), and Live wallpapers (looping/animated). Include at minimum: (1) a Browse screen with tabs/filters for 2D / 3D / Live, (2) a Wallpaper Detail/Preview screen, and (3) a Favorites screen.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can switch between 2D, 3D, and Live categories via clear UI controls.",
+        "Clicking an item from Browse opens a detail/preview view for that wallpaper.",
+        "A Favorites screen exists and can be reached from the main navigation."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add an initial, built-in wallpaper catalog that ships with the app and supports the three types: 2D (image assets), Live (video/gif/canvas animation assets), and 3D (React Three Fiber scenes). Each catalog entry must include: id, title, type (2D|LIVE|THREE_D), thumbnail asset path, and preview configuration (asset path for 2D/LIVE; scene key/config for 3D).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app renders a non-empty list of wallpapers for each of the three types without requiring users to upload content.",
+        "Each wallpaper card displays a thumbnail and title.",
+        "Selecting a 3D wallpaper loads an interactive 3D preview; selecting a 2D or Live wallpaper loads an appropriate preview."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the 3D wallpaper previews using Three.js via React Three Fiber. Provide at least 2 distinct 3D wallpaper scenes (e.g., abstract shapes, particle field) that animate over time and support basic interaction (orbit/drag or pointer interaction) in the preview.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least two different 3D wallpapers are available and can be previewed.",
+        "3D previews animate continuously while the preview screen is open.",
+        "Users can interact with the 3D preview (e.g., rotate/drag or respond to pointer input)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement Live wallpaper previews as animated content. Support at least one of: looping video, animated GIF, or a canvas-based animation. Ensure the preview loops smoothly and provides play/pause controls when applicable.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Live wallpaper previews play/animate automatically and can loop.",
+        "If the chosen live format supports playback controls, a user can pause and resume the preview.",
+        "Live previews do not block UI navigation (back/close works reliably)."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add an “Apply” action on the wallpaper detail screen that works within web constraints: provide a full-screen preview mode plus a Download option for 2D/Live assets, and for 3D provide an “Export snapshot” (download a rendered image) or “Open full-screen” mode. Label user-facing UI in English.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every wallpaper detail page has a clearly labeled Apply action.",
+        "For 2D wallpapers, users can download the image from the detail page.",
+        "For Live wallpapers, users can download the live asset (e.g., gif/mp4) from the detail page (when applicable for the chosen format).",
+        "For 3D wallpapers, users can enter full-screen mode and can export/download a snapshot image from the 3D preview."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Persist per-user favorites using Internet Identity authentication. Users should be able to favorite/unfavorite wallpapers from Browse and Detail screens; favorites must persist across reloads for the same authenticated user.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users are prompted to sign in when attempting to favorite (or favorites are stored only after sign-in).",
+        "After signing in, favoriting a wallpaper adds it to the Favorites screen.",
+        "Reloading the app preserves favorites for the signed-in user.",
+        "Unfavoriting removes it from Favorites immediately in the UI."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Backend: implement a Motoko API to (a) list the wallpaper catalog metadata, and (b) manage per-principal favorites (getFavorites, addFavorite, removeFavorite). Keep all backend logic in the single main actor.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There is a canister method to fetch the wallpaper catalog metadata.",
+        "There are canister methods to add/remove favorites and fetch current favorites for the caller principal.",
+        "Favorites are stored per principal and do not leak across users."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Frontend data layer: use React Query to load the wallpaper catalog and the signed-in user’s favorites, and to perform favorite mutations with optimistic UI updates and error rollback.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Wallpaper list loading states are shown (skeleton/spinner) and errors are handled with a visible message.",
+        "Favoriting/unfavoriting updates the UI immediately and resolves to the backend result.",
+        "On mutation failure, the UI reverts to the correct prior state and surfaces an error message."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Choose and apply a coherent visual theme for the app (distinct color palette, typography, spacing, and component style) and use it consistently across Browse, Detail, and Favorites screens. Do not use a blue+purple theme.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app has a consistent, recognizable theme across all screens (backgrounds, text, buttons, cards).",
+        "The chosen theme is not blue+purple.",
+        "UI components have consistent spacing and hierarchy (titles, metadata, actions)."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add static asset handling for wallpaper media (thumbnails + 2D images + live assets) as frontend public assets, and reference them via catalog metadata so they can be previewed and downloaded without routing through the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a\n 3d ,2d ,live wallpepar app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All built-in wallpaper media assets are available as static files in the frontend build output.",
+        "Catalog entries correctly reference those asset paths and they load in the UI.",
+        "Downloading a 2D/Live wallpaper downloads the underlying static asset file (not a backend response)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in the main actor).",
+    "Do not modify any files under frontend/src/components/ui; compose those components instead of editing them.",
+    "Do not edit the immutable hook paths (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts) or frontend/src/main.tsx."
+  ],
+  "nonGoals": [
+    "Mobile-native wallpaper setting on iOS/Android (outside browser capabilities).",
+    "User-uploaded wallpapers or external storage integrations.",
+    "Real-time multiplayer or social sharing features.",
+    "Third-party authentication beyond Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [
+      "App logo mark, minimal geometric style (app-logo.dim_512x512.png)",
+      "Wallpaper thumbnail frame/background texture, subtle neutral pattern (thumb-bg.dim_512x512.png)",
+      "Hero/background illustration with abstract shapes suitable for a wallpaper app (hero-bg.dim_1600x900.png)"
+    ],
+    "edits": []
+  }
+}

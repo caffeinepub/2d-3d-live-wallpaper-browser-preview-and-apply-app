@@ -1,0 +1,373 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Wallpaper Browser (2D / 3D / Live) with Preview, Apply, and Favorites",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create core navigation and required screens (Browse with type filters, Detail/Preview, Favorites).",
+      "acceptanceCriteria": [
+        "Users can switch between 2D, 3D, and Live categories via clear UI controls.",
+        "Clicking an item from Browse opens a detail/preview view for that wallpaper.",
+        "A Favorites screen exists and can be reached from the main navigation."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the app shell layout, navigation (Browse/Favorites), and route/view switching (Browse, Detail, Favorites). Ensure new screens are reachable and no orphan views exist."
+        },
+        {
+          "path": "frontend/src/routes.tsx",
+          "operation": "create",
+          "description": "Define the route configuration used by App (Browse, Wallpaper Detail/Preview, Favorites) and export route constants for consistent navigation."
+        },
+        {
+          "path": "frontend/src/screens/BrowseScreen.tsx",
+          "operation": "create",
+          "description": "Implement the Browse screen with a clear 2D/3D/Live category control and a responsive grid/list of wallpaper cards."
+        },
+        {
+          "path": "frontend/src/screens/WallpaperDetailScreen.tsx",
+          "operation": "create",
+          "description": "Implement the Wallpaper Detail/Preview screen structure (header, preview area, metadata, actions)."
+        },
+        {
+          "path": "frontend/src/screens/FavoritesScreen.tsx",
+          "operation": "create",
+          "description": "Implement the Favorites screen and render the user’s favorited wallpapers using the shared wallpaper card/list components."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable wallpaper card (thumbnail, title, type badge, favorite toggle) composed from existing components under frontend/src/components/ui (do not modify them)."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "create",
+          "description": "Create a shared app shell (top bar + main content + bottom/tab navigation) used by Browse/Favorites/Detail to keep navigation consistent."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Ship a built-in catalog (2D/LIVE assets + 3D scene configs) and render non-empty lists for each type including thumbnails and correct preview behavior.",
+      "acceptanceCriteria": [
+        "The app renders a non-empty list of wallpapers for each of the three types without requiring users to upload content.",
+        "Each wallpaper card displays a thumbnail and title.",
+        "Selecting a 3D wallpaper loads an interactive 3D preview; selecting a 2D or Live wallpaper loads an appropriate preview."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/catalog/wallpaperCatalog.ts",
+          "operation": "create",
+          "description": "Define the built-in wallpaper catalog entries (id, title, wType, thumbnail path, preview config) including at least one 2D, one LIVE, and two THREE_D items; align types with frontend/src/backend.d.ts WallpaperMeta/WallpaperType."
+        },
+        {
+          "path": "frontend/src/catalog/threeDScenes.ts",
+          "operation": "create",
+          "description": "Define a registry of 3D scene keys/config used by 3D catalog items, mapping to React Three Fiber scene components."
+        },
+        {
+          "path": "frontend/public/assets/wallpapers/2d/sand-dunes.jpg",
+          "operation": "create",
+          "description": "Add a built-in 2D wallpaper asset as a static public file for preview and download."
+        },
+        {
+          "path": "frontend/public/assets/wallpapers/2d/sand-dunes.thumb.jpg",
+          "operation": "create",
+          "description": "Add a built-in 2D thumbnail asset as a static public file referenced by catalog metadata."
+        },
+        {
+          "path": "frontend/public/assets/wallpapers/live/neon-waves.mp4",
+          "operation": "create",
+          "description": "Add a built-in Live wallpaper asset (looping video) as a static public file for preview and download."
+        },
+        {
+          "path": "frontend/public/assets/wallpapers/live/neon-waves.thumb.jpg",
+          "operation": "create",
+          "description": "Add a built-in Live thumbnail asset as a static public file referenced by catalog metadata."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperPreview.tsx",
+          "operation": "create",
+          "description": "Create a single preview component that selects the correct preview renderer based on wallpaper type (2D image, LIVE media, THREE_D scene)."
+        },
+        {
+          "path": "frontend/src/screens/BrowseScreen.tsx",
+          "operation": "modify",
+          "description": "Render the built-in catalog list per selected category and navigate to the Detail/Preview screen on card selection."
+        },
+        {
+          "path": "frontend/src/screens/WallpaperDetailScreen.tsx",
+          "operation": "modify",
+          "description": "Load the selected wallpaper by id and render its preview using the shared preview component."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement interactive, animated 3D wallpaper previews using React Three Fiber with at least two distinct scenes.",
+      "acceptanceCriteria": [
+        "At least two different 3D wallpapers are available and can be previewed.",
+        "3D previews animate continuously while the preview screen is open.",
+        "Users can interact with the 3D preview (e.g., rotate/drag or respond to pointer input)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/three/ThreeDPreviewCanvas.tsx",
+          "operation": "create",
+          "description": "Add a React Three Fiber canvas wrapper for 3D previews, including camera defaults and interaction support (e.g., orbit/drag)."
+        },
+        {
+          "path": "frontend/src/components/three/scenes/AbstractOrbitScene.tsx",
+          "operation": "create",
+          "description": "Implement a distinct animated 3D scene (e.g., rotating abstract shapes) for use as a wallpaper preview."
+        },
+        {
+          "path": "frontend/src/components/three/scenes/ParticleFieldScene.tsx",
+          "operation": "create",
+          "description": "Implement a second distinct animated 3D scene (e.g., particle field with pointer interaction) for use as a wallpaper preview."
+        },
+        {
+          "path": "frontend/src/catalog/threeDScenes.ts",
+          "operation": "modify",
+          "description": "Register at least two 3D scenes and expose their keys/config so catalog items can reference them."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperPreview.tsx",
+          "operation": "modify",
+          "description": "Route THREE_D wallpaper previews to the React Three Fiber preview canvas and load the correct scene via the scene key/config."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement Live wallpaper preview as looping animated content with play/pause controls when applicable.",
+      "acceptanceCriteria": [
+        "Live wallpaper previews play/animate automatically and can loop.",
+        "If the chosen live format supports playback controls, a user can pause and resume the preview.",
+        "Live previews do not block UI navigation (back/close works reliably)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/live/LiveWallpaperPreview.tsx",
+          "operation": "create",
+          "description": "Create a Live preview component that renders a looping HTML video (or chosen live format) with play/pause controls and safe cleanup on unmount."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperPreview.tsx",
+          "operation": "modify",
+          "description": "Route LIVE wallpaper previews to the Live preview component and pass the static asset path from catalog metadata."
+        },
+        {
+          "path": "frontend/src/catalog/wallpaperCatalog.ts",
+          "operation": "modify",
+          "description": "Ensure at least one LIVE wallpaper entry includes the correct preview asset path and thumbnail path for the live preview component."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add an Apply action with web-appropriate behaviors: full-screen preview plus downloads for 2D/Live; full-screen and snapshot export for 3D.",
+      "acceptanceCriteria": [
+        "Every wallpaper detail page has a clearly labeled Apply action.",
+        "For 2D wallpapers, users can download the image from the detail page.",
+        "For Live wallpapers, users can download the live asset (e.g., gif/mp4) from the detail page (when applicable for the chosen format).",
+        "For 3D wallpapers, users can enter full-screen mode and can export/download a snapshot image from the 3D preview."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/wallpapers/ApplyActions.tsx",
+          "operation": "create",
+          "description": "Implement the Apply UI actions (Full-screen preview, Download for 2D/LIVE, and Export snapshot for 3D) with English labels, composed from existing frontend/src/components/ui components (do not modify them)."
+        },
+        {
+          "path": "frontend/src/utils/download.ts",
+          "operation": "create",
+          "description": "Add a small utility for downloading static public assets by URL (2D/LIVE) and for downloading generated blobs (3D snapshot)."
+        },
+        {
+          "path": "frontend/src/components/three/ThreeDSnapshot.ts",
+          "operation": "create",
+          "description": "Add a helper to export a rendered snapshot image from the 3D preview (e.g., via canvas capture) for download."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/FullscreenPreviewModal.tsx",
+          "operation": "create",
+          "description": "Create a full-screen preview mode UI (modal or dedicated full-screen state) that works for 2D/LIVE/3D previews and can be reliably closed/backed out."
+        },
+        {
+          "path": "frontend/src/screens/WallpaperDetailScreen.tsx",
+          "operation": "modify",
+          "description": "Add the clearly labeled Apply action area and wire it to open full-screen preview and trigger downloads/snapshot export based on wallpaper type."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Persist per-user favorites with Internet Identity; allow favorite/unfavorite from Browse and Detail, prompting sign-in when needed.",
+      "acceptanceCriteria": [
+        "Unauthenticated users are prompted to sign in when attempting to favorite (or favorites are stored only after sign-in).",
+        "After signing in, favoriting a wallpaper adds it to the Favorites screen.",
+        "Reloading the app preserves favorites for the signed-in user.",
+        "Unfavoriting removes it from Favorites immediately in the UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Add a login/logout button using the selected authorization component guidance (Internet Identity + React Query cache clearing). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/favorites/FavoriteToggleButton.tsx",
+          "operation": "create",
+          "description": "Create a favorite/unfavorite control that prompts sign-in if unauthenticated and otherwise triggers favorite mutations; compose existing frontend/src/components/ui components (do not modify them)."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Add the LoginButton to the app chrome so auth state is accessible from all required screens. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperCard.tsx",
+          "operation": "modify",
+          "description": "Wire the FavoriteToggleButton into wallpaper cards so users can favorite/unfavorite directly from Browse."
+        },
+        {
+          "path": "frontend/src/screens/WallpaperDetailScreen.tsx",
+          "operation": "modify",
+          "description": "Wire the FavoriteToggleButton into the detail page actions so users can favorite/unfavorite from the preview screen."
+        },
+        {
+          "path": "frontend/src/screens/FavoritesScreen.tsx",
+          "operation": "modify",
+          "description": "Render favorites based on the authenticated user’s persisted favorites list; show an appropriate empty/auth prompt state if not signed in."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Use React Query to load wallpaper catalog and favorites and to mutate favorites with optimistic updates and rollback on errors.",
+      "acceptanceCriteria": [
+        "Wallpaper list loading states are shown (skeleton/spinner) and errors are handled with a visible message.",
+        "Favoriting/unfavoriting updates the UI immediately and resolves to the backend result.",
+        "On mutation failure, the UI reverts to the correct prior state and surfaces an error message."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/api/wallpapers.ts",
+          "operation": "create",
+          "description": "Create frontend API wrappers that call backend capabilities via useActor for fetching catalog metadata and favorites and for add/remove favorite operations (no backend changes in this plan)."
+        },
+        {
+          "path": "frontend/src/hooks/useWallpaperCatalogQuery.ts",
+          "operation": "create",
+          "description": "Implement a React Query hook to fetch the wallpaper catalog, exposing loading and error states for Browse/Detail."
+        },
+        {
+          "path": "frontend/src/hooks/useFavoritesQuery.ts",
+          "operation": "create",
+          "description": "Implement a React Query hook to fetch the signed-in user’s favorites list; keep the query disabled or return empty state when unauthenticated."
+        },
+        {
+          "path": "frontend/src/hooks/useFavoriteMutations.ts",
+          "operation": "create",
+          "description": "Implement optimistic React Query mutations for add/remove favorite with rollback on error and a surfaced error message."
+        },
+        {
+          "path": "frontend/src/screens/BrowseScreen.tsx",
+          "operation": "modify",
+          "description": "Switch Browse to React Query-driven data (catalog + favorites overlay), including visible loading and error UI states."
+        },
+        {
+          "path": "frontend/src/screens/WallpaperDetailScreen.tsx",
+          "operation": "modify",
+          "description": "Use React Query data for the selected wallpaper and favorite status; display errors and ensure UI remains navigable."
+        },
+        {
+          "path": "frontend/src/components/favorites/FavoriteToggleButton.tsx",
+          "operation": "modify",
+          "description": "Integrate optimistic mutation hooks, immediate UI updates, and error rollback messaging."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Apply a consistent, coherent theme across screens (not blue+purple) with consistent spacing and hierarchy.",
+      "acceptanceCriteria": [
+        "The app has a consistent, recognizable theme across all screens (backgrounds, text, buttons, cards).",
+        "The chosen theme is not blue+purple.",
+        "UI components have consistent spacing and hierarchy (titles, metadata, actions)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define the global theme tokens/styles (e.g., background, typography, card surfaces, accent color) using a non-blue+purple palette and consistent spacing rules."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout spacing, surfaces, and typography hierarchy across Browse/Detail/Favorites using composed UI components (do not modify frontend/src/components/ui)."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperCard.tsx",
+          "operation": "modify",
+          "description": "Align card styling with the global theme (thumbnail framing, title hierarchy, action placement) and ensure consistency across lists."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Serve wallpaper media (thumbnails + 2D images + live assets) as static public assets and reference them via catalog metadata for preview and download.",
+      "acceptanceCriteria": [
+        "All built-in wallpaper media assets are available as static files in the frontend build output.",
+        "Catalog entries correctly reference those asset paths and they load in the UI.",
+        "Downloading a 2D/Live wallpaper downloads the underlying static asset file (not a backend response)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/catalog/wallpaperCatalog.ts",
+          "operation": "modify",
+          "description": "Ensure all thumbnail and preview fields reference static public asset paths for 2D/LIVE items and scene keys/config for 3D items."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperCard.tsx",
+          "operation": "modify",
+          "description": "Render thumbnails from the catalog’s static asset paths and ensure they load correctly in the UI."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/ApplyActions.tsx",
+          "operation": "modify",
+          "description": "Implement downloads for 2D/LIVE using the static asset URLs so downloads fetch the static files (not a backend response)."
+        },
+        {
+          "path": "frontend/public/assets/generated/app-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add generated image asset and make it available for branding in the app UI (static frontend asset)."
+        },
+        {
+          "path": "frontend/public/assets/generated/thumb-bg.dim_512x512.png",
+          "operation": "create",
+          "description": "Add generated image asset for subtle thumbnail frame/background usage in wallpaper cards (static frontend asset)."
+        },
+        {
+          "path": "frontend/public/assets/generated/hero-bg.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add generated hero/background illustration asset for use within an existing required screen (e.g., Browse header section) (static frontend asset)."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Wire branding visuals using frontend/public/assets/generated/app-logo.dim_512x512.png and integrate the hero background frontend/public/assets/generated/hero-bg.dim_1600x900.png into an existing required screen area (no new routes)."
+        },
+        {
+          "path": "frontend/src/components/wallpapers/WallpaperCard.tsx",
+          "operation": "modify",
+          "description": "Use frontend/public/assets/generated/thumb-bg.dim_512x512.png as a subtle frame/texture behind thumbnails to standardize card presentation."
+        }
+      ]
+    }
+  ]
+}
